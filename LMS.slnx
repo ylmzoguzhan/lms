@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/BuildingBlocks/">
+    <Project Path="src/BuildingBlocks/Shared.Abstractions/Shared.Abstractions.csproj" />
+    <Project Path="src/BuildingBlocks/Shared.Contracts/Shared.Contracts.csproj" />
+    <Project Path="src/BuildingBlocks/Shared.Infrastructure/Shared.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/">
+    <Project Path="src/Modules/Media/Media.csproj" />
+  </Folder>
+  <Folder Name="/src/WebGateway/">
+    <Project Path="src/WebGateway/Host/Host.csproj" />
+  </Folder>
+</Solution>
