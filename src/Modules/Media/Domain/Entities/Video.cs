@@ -5,6 +5,7 @@ public class Video
     public Guid Id { get; private set; }
     public string Title { get; private set; }
     public string BlobPath { get; private set; }
+    public string? HlsPath { get; private set; }
     public VideoStatus Status { get; private set; }
     public DateTime CreatedAt { get; private set; }
 
@@ -18,12 +19,21 @@ public class Video
     }
 
     public void MarkAsProcessing() => Status = VideoStatus.Processing;
-    public void MarkAsReady() => Status = VideoStatus.Ready;
+    public void MarkAsReady(string hlsPath)
+    {
+        Status = VideoStatus.Ready;
+        HlsPath = hlsPath;
+    }
+
+    public void MarkAsFailed()
+    {
+        Status = VideoStatus.Failed;
+    }
 }
 public enum VideoStatus
 {
     Pending,
     Processing,
     Ready,
-    Failled
+    Failed
 }

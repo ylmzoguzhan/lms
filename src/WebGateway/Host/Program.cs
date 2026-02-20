@@ -1,10 +1,13 @@
 using MassTransit;
 using Media;
+using Media.Features.Videos.ProcessVideoCallback;
 using Media.Features.Videos.UploadVideo;
 using Media.Infrastructure.Data;
 using Minio;
 using Shared.Abstractions;
+using Shared.Contracts.Media;
 using Shared.Infrastructure;
+using Shared.Infrastructure.Messaging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,9 +21,10 @@ builder.Services.AddSingleton<IMinioClient>(sp =>
         .WithSSL(false)
         .Build();
 });
-
+builder.Services.AddScoped<VideoProcessedHandler>();
 builder.Services.AddMassTransit(x =>
 {
+    x.AddConsumer<IntegrationEventWrapper<VideoProcessedIntegrationEvent, VideoProcessedHandler>>();
     x.AddEntityFrameworkOutbox<MediaDbContext>(o =>
     {
         o.UsePostgres();

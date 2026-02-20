@@ -4,6 +4,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="MassTransit.RabbitMQ" Version="8.2.5" />
+    <PackageReference Include="MediatR" Version="14.0.0" />
     <PackageReference Include="Minio" Version="7.0.0" />
   </ItemGroup>
   <PropertyGroup>
