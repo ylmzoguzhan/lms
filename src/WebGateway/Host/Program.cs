@@ -37,10 +37,13 @@ builder.Services.AddMassTransit(x =>
         cfg.ConfigureEndpoints(context);
     });
 });
-
+builder.Services.AddMediatR(cfg =>
+    {
+        cfg.RegisterServicesFromAssembly(typeof(MediaModule).Assembly);
+    });
 builder.Services.AddMediaModule(builder.Configuration);
 builder.Services.AddScoped<IStorageService, MinioStorageService>();
-builder.Services.AddScoped<IEventBus, MassTransitEventBus>();
+builder.Services.AddScoped<IIntegrationBus, MassTransitEventBus>();
 var app = builder.Build();
 app.MapUploadVideo();
 

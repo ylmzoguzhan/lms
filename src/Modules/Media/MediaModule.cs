@@ -17,10 +17,6 @@ public static class MediaModule
                 o.MigrationsHistoryTable("__EFMigrationsHistory", "media");
             });
         });
-        services.AddMediatR(cfg =>
-        {
-            cfg.RegisterServicesFromAssembly(typeof(MediaDbContext).Assembly);
-        });
         return services;
     }
 }

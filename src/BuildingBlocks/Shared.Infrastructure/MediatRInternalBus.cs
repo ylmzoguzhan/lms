@@ -18,3 +18,16 @@ public class MediatRInternalBus(IMediator mediator) : IInternalBus
         return (TResponse)result!;
     }
 }
+internal class MediatRHandlerWrapper<TCommand, TResponse>(
+    ICommandHandler<TCommand, TResponse> customHandler)
+    : IRequestHandler<MediatRCommandWrapper<TCommand, TResponse>, TResponse>
+    where TCommand : ICommand<TResponse>
+{
+    public Task<TResponse> Handle(MediatRCommandWrapper<TCommand, TResponse> request, CancellationToken cancellationToken)
+    {
+        return customHandler.HandleAsync(request.Command, cancellationToken);
+    }
+}
+
+internal record MediatRCommandWrapper<TCommand, TResponse>(TCommand Command)
+    : IRequest<TResponse> where TCommand : ICommand<TResponse>;

@@ -11,3 +11,8 @@ public interface IInternalBus
 
     Task<TResponse> SendAsync<TResponse>(ICommand<TResponse> command, CancellationToken ct = default);
 }
+public interface ICommandHandler<in TCommand, TResponse>
+    where TCommand : ICommand<TResponse>
+{
+    Task<TResponse> HandleAsync(TCommand command, CancellationToken ct = default);
+}
