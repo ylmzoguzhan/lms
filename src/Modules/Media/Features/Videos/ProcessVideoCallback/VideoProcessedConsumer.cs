@@ -6,7 +6,7 @@ using Shared.Contracts.Media;
 namespace Media.Features.Videos.ProcessVideoCallback;
 
 public class VideoProcessedHandler(MediaDbContext dbContext)
-    : IIntegrationEventHandler<VideoProcessedIntegrationEvent>
+    : IIntegrationConsumer<VideoProcessedIntegrationEvent>
 {
     public async Task HandleAsync(VideoProcessedIntegrationEvent @event, CancellationToken ct)
     {

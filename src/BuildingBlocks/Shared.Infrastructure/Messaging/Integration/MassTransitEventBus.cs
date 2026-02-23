@@ -1,9 +1,9 @@
 using MassTransit;
-using Shared.Abstractions;
+using Shared.Abstractions.Messaging;
 
-namespace Shared.Infrastructure;
+namespace Shared.Infrastructure.Messaging.Integration;
 
-public class MassTransitEventBus(IPublishEndpoint publishEndpoint) : IIntegrationBus
+public class MassTransitEventBus(IPublishEndpoint publishEndpoint) : IIntegrationEventBus
 {
     public async Task PublishAsync<T>(T message, CancellationToken ct = default) where T : class
     {

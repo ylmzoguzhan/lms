@@ -1,6 +1,6 @@
-namespace Shared.Abstractions;
+namespace Shared.Abstractions.Messaging;
 
-public interface IIntegrationBus
+public interface IIntegrationEventBus
 {
     Task PublishAsync<T>(T message, CancellationToken ct = default) where T : class;
 }

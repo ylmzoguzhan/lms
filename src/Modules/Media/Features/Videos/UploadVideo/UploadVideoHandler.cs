@@ -1,13 +1,15 @@
 using Media.Domain.Entities;
 using Media.Infrastructure.Data;
 using Shared.Abstractions;
+using Shared.Abstractions.Messaging;
+using Shared.Abstractions.Messaging.Internal;
 using Shared.Contracts.Media;
 
 namespace Media.Features.Videos.UploadVideo;
 
 public record UploadVideoCommand(string Title, string FileName, string ContentType) : ICommand<UploadVideoResponse>;
 public record UploadVideoResponse(Guid VideoId, string UploadUrl);
-public class UploadVideoHandler(MediaDbContext dbContext, IStorageService storageService, IIntegrationBus eventBus) : ICommandHandler<UploadVideoCommand, UploadVideoResponse>
+public class UploadVideoHandler(MediaDbContext dbContext, IStorageService storageService, IIntegrationEventBus eventBus) : ICommandHandler<UploadVideoCommand, UploadVideoResponse>
 {
     public async Task<UploadVideoResponse> HandleAsync(UploadVideoCommand command, CancellationToken ct = default)
     {

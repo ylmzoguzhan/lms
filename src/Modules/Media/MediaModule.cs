@@ -1,3 +1,5 @@
+using Media.Features.Videos.ProcessVideoCallback;
+using Media.Features.Videos.UploadVideo;
 using Media.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +19,9 @@ public static class MediaModule
                 o.MigrationsHistoryTable("__EFMigrationsHistory", "media");
             });
         });
+        services.AddScoped<VideoProcessedHandler>();
+        services.AddScoped<UploadVideoHandler>();
         return services;
+
     }
 }

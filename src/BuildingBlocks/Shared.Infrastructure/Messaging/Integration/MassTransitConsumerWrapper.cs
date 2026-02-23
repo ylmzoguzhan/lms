@@ -1,12 +1,12 @@
 using MassTransit;
 using Shared.Abstractions.Messaging;
 
-namespace Shared.Infrastructure.Messaging;
+namespace Shared.Infrastructure.Messaging.Integration;
 
-public class IntegrationEventWrapper<TEvent, THandler>(THandler handler)
+public class MassTransitConsumerWrapper<TEvent, THandler>(THandler handler)
     : IConsumer<TEvent>
-    where TEvent : class
-    where THandler : IIntegrationEventHandler<TEvent>
+        where TEvent : class
+        where THandler : IIntegrationConsumer<TEvent>
 {
     public async Task Consume(ConsumeContext<TEvent> context)
     {
