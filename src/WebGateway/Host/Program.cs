@@ -1,3 +1,5 @@
+using Courses;
+using Courses.Features.Courses.CreateCourse;
 using MassTransit;
 using Media;
 using Media.Features.Videos.UploadVideo;
@@ -21,11 +23,14 @@ builder.Services.AddSharedInfrastructure(
     typeof(MediaModule).Assembly
 );
 builder.Services.AddScoped<ICommandHandler<UploadVideoCommand, UploadVideoResponse>, UploadVideoHandler>();
+builder.Services.AddScoped<ICommandHandler<CreateCourseCommand, Guid>, CreateCourseHandler>();
 
 
 builder.Services.AddMediaModule(builder.Configuration);
+builder.Services.AddCoursesModule(builder.Configuration);
 var app = builder.Build();
 app.MapUploadVideo();
+app.MapCreateCourse();
 app.UseHttpsRedirection();
 app.Run();
 

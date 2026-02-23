@@ -6,6 +6,7 @@
     <Project Path="src/BuildingBlocks/Shared.Infrastructure/Shared.Infrastructure.csproj" />
   </Folder>
   <Folder Name="/src/Modules/">
+    <Project Path="src/Modules/Courses/Courses.csproj" />
     <Project Path="src/Modules/Media/Media.csproj" />
   </Folder>
   <Folder Name="/src/WebGateway/">
