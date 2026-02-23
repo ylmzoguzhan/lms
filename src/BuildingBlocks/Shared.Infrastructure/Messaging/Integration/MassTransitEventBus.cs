@@ -1,5 +1,5 @@
 using MassTransit;
-using Shared.Abstractions.Messaging;
+using Shared.Abstractions.Messaging.Integration;
 
 namespace Shared.Infrastructure.Messaging.Integration;
 
@@ -7,6 +7,6 @@ public class MassTransitEventBus(IPublishEndpoint publishEndpoint) : IIntegratio
 {
     public async Task PublishAsync<T>(T message, CancellationToken ct = default) where T : class
     {
-        await publishEndpoint.Publish(message);
+        await publishEndpoint.Publish(message, ct);
     }
 }

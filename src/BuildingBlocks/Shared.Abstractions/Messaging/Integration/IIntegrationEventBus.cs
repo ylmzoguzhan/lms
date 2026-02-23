@@ -1,4 +1,4 @@
-namespace Shared.Abstractions.Messaging;
+namespace Shared.Abstractions.Messaging.Integration;
 
 public interface IIntegrationEventBus
 {

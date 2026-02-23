@@ -1,6 +1,5 @@
 using Media.Infrastructure.Data;
-using Microsoft.Extensions.Logging;
-using Shared.Abstractions.Messaging;
+using Shared.Abstractions.Messaging.Integration;
 using Shared.Contracts.Media;
 
 namespace Media.Features.Videos.ProcessVideoCallback;

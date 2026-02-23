@@ -1,5 +1,5 @@
 using MassTransit;
-using Shared.Abstractions.Messaging;
+using Shared.Abstractions.Messaging.Integration;
 
 namespace Shared.Infrastructure.Messaging.Integration;
 
