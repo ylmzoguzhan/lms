@@ -1,5 +1,6 @@
 using Courses;
 using Courses.Features.Courses.CreateCourse;
+using Courses.Features.Courses.GetCourseExistence;
 using MassTransit;
 using Media;
 using Media.Features.Videos.UploadVideo;
@@ -24,7 +25,7 @@ builder.Services.AddSharedInfrastructure(
 );
 builder.Services.AddScoped<ICommandHandler<UploadVideoCommand, UploadVideoResponse>, UploadVideoHandler>();
 builder.Services.AddScoped<ICommandHandler<CreateCourseCommand, Guid>, CreateCourseHandler>();
-
+builder.Services.AddScoped<IQueryHandler<GetCourseExistenceQuery, bool>, GetCourseExistenceHandler>();
 
 builder.Services.AddMediaModule(builder.Configuration);
 builder.Services.AddCoursesModule(builder.Configuration);

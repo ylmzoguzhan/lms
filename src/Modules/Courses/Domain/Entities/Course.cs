@@ -7,6 +7,7 @@ public class Course
     public string Description { get; set; }
     public Course(string title, string description)
     {
+        Id = Guid.NewGuid();
         Title = title;
         Description = description;
     }

@@ -42,8 +42,10 @@ public static class DependencyInjection
                     foreach (var assembly in moduleAssemblies)
                     {
                         var handlerTypes = assembly.GetTypes()
-                            .Where(t => t.GetInterfaces().Any(i =>
-                                i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IIntegrationConsumer<>)));
+                                .Where(t => t.GetInterfaces().Any(i =>
+                                    i.IsGenericType &&
+                                    (i.GetGenericTypeDefinition() == typeof(ICommandHandler<,>) ||
+                                    i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>))));
 
                         foreach (var handlerType in handlerTypes)
                         {
