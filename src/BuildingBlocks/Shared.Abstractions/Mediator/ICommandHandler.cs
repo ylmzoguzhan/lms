@@ -1,4 +1,4 @@
-namespace Shared.Abstractions.Messaging.Internal;
+namespace Shared.Abstractions.Mediator;
 
 public interface ICommandHandler<in TCommand, TResponse> where TCommand : ICommand<TResponse>
 {

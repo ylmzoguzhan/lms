@@ -6,7 +6,7 @@ using MassTransit;
 using Media;
 using Media.Features.Videos.UploadVideo;
 using Media.Infrastructure.Data;
-using Shared.Abstractions.Messaging.Internal;
+using Shared.Abstractions.Mediator;
 using Shared.Infrastructure;
 using Users;
 using Users.Features.Enrollments;

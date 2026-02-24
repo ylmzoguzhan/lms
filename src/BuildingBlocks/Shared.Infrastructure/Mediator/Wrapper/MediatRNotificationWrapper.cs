@@ -1,7 +1,7 @@
 using MediatR;
-using Shared.Abstractions.Messaging.Internal;
+using Shared.Abstractions.Mediator;
 
-namespace Shared.Infrastructure.Messaging.Internal;
+namespace Shared.Infrastructure.Mediator.Wrapper;
 
 public record MediatRNotificationWrapper<T>(T Event) : INotification
     where T : IInternalEvent;

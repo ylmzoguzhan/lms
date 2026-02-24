@@ -1,9 +1,3 @@
-using Media.Domain.Entities;
-using Media.Infrastructure.Data;
-using Shared.Abstractions;
-using Shared.Abstractions.Messaging.Integration;
-using Shared.Abstractions.Messaging.Internal;
-using Shared.Contracts.Media;
 
 namespace Media.Features.Videos.UploadVideo;
 

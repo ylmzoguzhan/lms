@@ -1,7 +1,3 @@
-using Media.Infrastructure.Data;
-using Shared.Abstractions.Messaging.Integration;
-using Shared.Contracts.Media;
-
 namespace Media.Features.Videos.ProcessVideoCallback;
 
 public class VideoProcessedHandler(MediaDbContext dbContext)

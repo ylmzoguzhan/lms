@@ -1,0 +1,12 @@
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Routing;
+global using Shared.Abstractions.Mediator;
+global using System.Text.Json;
+global using Courses.Contracts;
+global using Courses.Domain.Entities;
+global using Courses.Infrastructure.Data;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Logging;
+global using Shared.Abstractions.Messaging.Outbox;

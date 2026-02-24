@@ -1,9 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Shared.Abstractions.Messaging.Internal;
-
 namespace Courses.Features.Courses.CreateCourse;
 
 public static class CreateCourseEndpoint

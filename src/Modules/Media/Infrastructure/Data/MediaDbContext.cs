@@ -1,7 +1,3 @@
-using MassTransit;
-using Media.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
-
 namespace Media.Infrastructure.Data;
 
 public class MediaDbContext : DbContext

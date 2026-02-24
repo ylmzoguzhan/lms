@@ -1,8 +1,3 @@
-using Courses.Contracts;
-using Shared.Abstractions.Messaging.Internal;
-using Users.Domain.Entities;
-using Users.Infrastructure.Data;
-
 namespace Users.Features.Enrollments;
 
 public record EnrollInCourseCommand(Guid UserId, Guid CourseId) : ICommand<Guid>;

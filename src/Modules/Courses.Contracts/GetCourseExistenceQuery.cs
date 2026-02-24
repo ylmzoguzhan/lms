@@ -1,4 +1,4 @@
-using Shared.Abstractions.Messaging.Internal;
+using Shared.Abstractions.Mediator;
 
 namespace Courses.Contracts;
 

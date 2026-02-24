@@ -1,4 +1,4 @@
-namespace Shared.Abstractions.Messaging.Integration;
+namespace Shared.Abstractions.Messaging;
 
 public interface IIntegrationConsumer<in TEvent> where TEvent : class
 {

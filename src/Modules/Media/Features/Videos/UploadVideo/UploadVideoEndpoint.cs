@@ -1,10 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using Shared.Abstractions;
-using Shared.Abstractions.Messaging.Internal;
-
 namespace Media.Features.Videos.UploadVideo;
 
 public static class UploadVideoEndpoint

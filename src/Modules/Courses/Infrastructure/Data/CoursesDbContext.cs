@@ -1,7 +1,3 @@
-using Courses.Domain.Entities;
-using MassTransit;
-using Microsoft.EntityFrameworkCore;
-
 namespace Courses.Infrastructure.Data;
 
 public class CoursesDbContext : DbContext

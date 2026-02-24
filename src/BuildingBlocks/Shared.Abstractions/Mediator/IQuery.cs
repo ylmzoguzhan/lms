@@ -1,4 +1,4 @@
-namespace Shared.Abstractions.Messaging.Internal;
+namespace Shared.Abstractions.Mediator;
 
 public interface IQuery<out TResponse> { }
 

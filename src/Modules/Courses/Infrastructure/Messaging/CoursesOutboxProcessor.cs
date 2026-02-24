@@ -1,11 +1,3 @@
-using System.Text.Json;
-using Courses.Domain.Entities;
-using Courses.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Shared.Abstractions.Messaging.Internal;
-using Shared.Abstractions.Messaging.Outbox;
-
 namespace Courses.Infrastructure.Messaging;
 
 public class CoursesOutboxProcessor(
@@ -16,6 +8,7 @@ public class CoursesOutboxProcessor(
     public async Task ProcessAsync(CancellationToken ct = default)
     {
         var messages = await dbContext.OutboxMessages
+            .Where(x => x.ProcessedAt == null)
             .OrderBy(x => x.CreatedAt)
             .Take(20)
             .ToListAsync(ct);

@@ -1,9 +1,3 @@
-using System.Text.Json;
-using Courses.Contracts;
-using Courses.Domain.Entities;
-using Courses.Infrastructure.Data;
-using Shared.Abstractions.Messaging.Internal;
-
 namespace Courses.Features.Courses.CreateCourse;
 
 public record CreateCourseCommand(string title, string description) : ICommand<Guid>;

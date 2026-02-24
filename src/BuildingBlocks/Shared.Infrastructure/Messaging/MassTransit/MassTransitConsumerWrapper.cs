@@ -1,7 +1,7 @@
 using MassTransit;
-using Shared.Abstractions.Messaging.Integration;
+using Shared.Abstractions.Messaging;
 
-namespace Shared.Infrastructure.Messaging.Integration;
+namespace Shared.Infrastructure.Messaging.MassTransit;
 
 public class MassTransitConsumerWrapper<TEvent, THandler>(THandler handler)
     : IConsumer<TEvent>

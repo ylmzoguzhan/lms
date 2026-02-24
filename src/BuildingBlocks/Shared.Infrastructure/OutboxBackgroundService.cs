@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Shared.Abstractions.Messaging.Outbox;
 
-namespace Shared.Infrastructure.Messaging.Internal;
+namespace Shared.Infrastructure;
 
 public class OutboxBackgroundService(
     IServiceScopeFactory scopeFactory,

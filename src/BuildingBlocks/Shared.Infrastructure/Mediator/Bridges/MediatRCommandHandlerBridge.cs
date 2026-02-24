@@ -1,7 +1,9 @@
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Abstractions.Messaging.Internal;
-namespace Shared.Infrastructure.Messaging.Internal;
+using Shared.Abstractions.Mediator;
+using Shared.Infrastructure.Mediator.Wrapper;
+
+namespace Shared.Infrastructure.Mediator.Bridges;
 
 internal class MediatRCommandHandlerBridge<TRequest, TResponse>(IServiceProvider serviceProvider)
     : IRequestHandler<TRequest, TResponse> where TRequest : IRequest<TResponse>

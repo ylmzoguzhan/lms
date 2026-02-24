@@ -5,10 +5,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using Shared.Abstractions;
-using Shared.Abstractions.Messaging.Integration;
-using Shared.Abstractions.Messaging.Internal;
-using Shared.Infrastructure.Messaging.Integration;
-using Shared.Infrastructure.Messaging.Internal;
+using Shared.Abstractions.Messaging;
+using Shared.Abstractions.Mediator;
+using Shared.Infrastructure.Mediator;
+using Shared.Infrastructure.Mediator.Bridges;
+using Shared.Infrastructure.Mediator.Wrapper;
+using Shared.Infrastructure.Messaging.MassTransit;
+
 
 namespace Shared.Infrastructure;
 
@@ -32,7 +35,7 @@ public static class DependencyInjection
                 .Build();
         });
         //mediatr
-        services.AddScoped<IInternalBus, MediatRInternalCommandBus>();
+        services.AddScoped<IInternalBus, InternalBus>();
         services.AddTransient(typeof(IRequestHandler<,>), typeof(MediatRCommandHandlerBridge<,>));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 

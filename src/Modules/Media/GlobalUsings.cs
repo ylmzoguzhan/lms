@@ -1,0 +1,11 @@
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Routing;
+global using Shared.Abstractions;
+global using Shared.Abstractions.Mediator;
+global using Media.Domain.Entities;
+global using Media.Infrastructure.Data;
+global using Shared.Abstractions.Messaging;
+global using Shared.Contracts.Media;
+global using Microsoft.EntityFrameworkCore;

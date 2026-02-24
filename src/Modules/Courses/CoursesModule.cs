@@ -1,9 +1,7 @@
-using Courses.Infrastructure.Data;
 using Courses.Infrastructure.Messaging;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Abstractions.Messaging.Outbox;
+
 
 namespace Courses;
 

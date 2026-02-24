@@ -1,9 +1,10 @@
 using MediatR;
-using Shared.Abstractions.Messaging.Internal;
+using Shared.Abstractions.Mediator;
+using Shared.Infrastructure.Mediator.Wrapper;
 
-namespace Shared.Infrastructure.Messaging.Internal;
+namespace Shared.Infrastructure.Mediator;
 
-internal class MediatRInternalCommandBus(IMediator mediator) : IInternalBus
+internal class InternalBus(IMediator mediator) : IInternalBus
 {
     public async Task<TResponse> SendAsync<TResponse>(ICommand<TResponse> command, CancellationToken ct = default)
     {

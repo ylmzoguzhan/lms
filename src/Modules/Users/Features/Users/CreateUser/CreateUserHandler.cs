@@ -1,7 +1,3 @@
-using Shared.Abstractions.Messaging.Internal;
-using Users.Domain.Entities;
-using Users.Infrastructure.Data;
-
 namespace Users.Features.Users.CreateUser;
 
 public record CreateUserCommand(string email) : ICommand<Guid>;
