@@ -13,7 +13,16 @@ internal class MediatRCommandHandlerBridge<TRequest, TResponse>(IServiceProvider
             var command = wrapper.Command;
             var commandType = command.GetType();
 
-            var handlerType = typeof(ICommandHandler<,>).MakeGenericType(commandType, typeof(TResponse));
+            var handlerType = request switch
+            {
+                MediatRCommandWrapper<TResponse> w when w.Command is ICommand<TResponse>
+                    => typeof(ICommandHandler<,>).MakeGenericType(w.Command.GetType(), typeof(TResponse)),
+
+                MediatRCommandWrapper<TResponse> w when w.Command is IQuery<TResponse>
+                    => typeof(IQueryHandler<,>).MakeGenericType(w.Command.GetType(), typeof(TResponse)),
+
+                _ => throw new InvalidOperationException("Bilinmeyen istek tipi!")
+            };
             var handler = serviceProvider.GetRequiredService(handlerType);
 
             var method = handlerType.GetMethod("HandleAsync");

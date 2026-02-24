@@ -10,4 +10,9 @@ internal class MediatRInternalCommandBus(IMediator mediator) : IInternalEventBus
         var wrapper = new MediatRCommandWrapper<TResponse>(command);
         return await mediator.Send(wrapper, ct);
     }
+    public async Task<TResponse> QueryAsync<TResponse>(IQuery<TResponse> query, CancellationToken ct = default)
+    {
+        var wrapper = new MediatRCommandWrapper<TResponse>(query);
+        return await mediator.Send(wrapper, ct);
+    }
 }

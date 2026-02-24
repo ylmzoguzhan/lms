@@ -1,4 +1,6 @@
+using Courses.Contracts;
 using Shared.Abstractions.Messaging.Internal;
+using Users.Domain.Entities;
 using Users.Infrastructure.Data;
 
 namespace Users.Features.Enrollments;
@@ -8,7 +10,7 @@ public class EnrollInCourseHandler(UsersDbContext dbContext, IInternalEventBus b
 {
     public async Task<Guid> HandleAsync(EnrollInCourseCommand command, CancellationToken ct = default)
     {
-        var courseExists = await bus.SendAsync(new GetCourseExistenceQuery(command.CourseId), ct);
+        var courseExists = await bus.QueryAsync(new GetCourseExistenceQuery(command.CourseId), ct);
 
         if (!courseExists)
         {

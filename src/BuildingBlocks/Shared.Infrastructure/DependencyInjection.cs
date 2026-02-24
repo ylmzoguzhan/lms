@@ -37,36 +37,36 @@ public static class DependencyInjection
 
         services.AddScoped<IIntegrationEventBus, MassTransitEventBus>();
         services.AddMassTransit(x =>
-                {
-                    busConfigurator?.Invoke(x);
-                    foreach (var assembly in moduleAssemblies)
-                    {
-                        var handlerTypes = assembly.GetTypes()
-                                .Where(t => t.GetInterfaces().Any(i =>
-                                    i.IsGenericType &&
-                                    (i.GetGenericTypeDefinition() == typeof(ICommandHandler<,>) ||
-                                    i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>))));
+ {
+     foreach (var assembly in moduleAssemblies)
+     {
+         var consumerTypes = assembly.GetTypes()
+             .Where(t => t.IsClass && !t.IsAbstract &&
+                         t.GetInterfaces().Any(i => i.IsGenericType &&
+                                                  i.GetGenericTypeDefinition() == typeof(IIntegrationConsumer<>)));
 
-                        foreach (var handlerType in handlerTypes)
-                        {
-                            var interfaceType = handlerType.GetInterfaces().First(i =>
-                                i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IIntegrationConsumer<>));
-                            var eventType = interfaceType.GetGenericArguments()[0];
+         foreach (var consumerType in consumerTypes)
+         {
+             var interfaceType = consumerType.GetInterfaces()
+                 .FirstOrDefault(i => i.IsGenericType &&
+                                      i.GetGenericTypeDefinition() == typeof(IIntegrationConsumer<>));
 
-                            var wrapperType = typeof(MassTransitConsumerWrapper<,>).MakeGenericType(eventType, handlerType);
+             if (interfaceType == null) continue;
 
-                            x.AddConsumer(wrapperType);
-                        }
-                    }
+             var eventType = interfaceType.GetGenericArguments()[0];
 
-                    x.UsingRabbitMq((context, cfg) =>
-                    {
-                        cfg.Host(configuration["RabbitMq:Host"] ?? "localhost", "/");
-                        cfg.UseRawJsonDeserializer();
-                        cfg.UseRawJsonSerializer();
-                        cfg.ConfigureEndpoints(context);
-                    });
-                });
+             var wrapperType = typeof(MassTransitConsumerWrapper<,>).MakeGenericType(eventType, consumerType);
+
+             x.AddConsumer(wrapperType);
+         }
+     }
+
+     x.UsingRabbitMq((context, cfg) =>
+     {
+         cfg.Host(configuration["RabbitMq:Host"] ?? "localhost", "/");
+         cfg.ConfigureEndpoints(context);
+     });
+ });
 
 
         return services;

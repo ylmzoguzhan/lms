@@ -1,10 +1,11 @@
+using Courses.Contracts;
 using Courses.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Shared.Abstractions.Messaging.Internal;
 
 namespace Courses.Features.Courses.GetCourseExistence;
 
-public record GetCourseExistenceQuery(Guid CourseId) : IQuery<bool>;
+
 
 public class GetCourseExistenceHandler(CoursesDbContext dbContext)
     : IQueryHandler<GetCourseExistenceQuery, bool>

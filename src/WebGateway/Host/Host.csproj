@@ -19,6 +19,7 @@
     <ProjectReference Include="..\..\Modules\Media\Media.csproj" />
     <ProjectReference Include="..\..\Modules\Courses\Courses.csproj" />
     <ProjectReference Include="..\..\Modules\Users\Users.csproj" />
+    <ProjectReference Include="..\..\Modules\Courses.Contracts\Courses.Contracts.csproj" />
   </ItemGroup>
 
 </Project>
