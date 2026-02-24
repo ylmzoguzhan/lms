@@ -60,6 +60,25 @@ public static class DependencyInjection
 
              x.AddConsumer(wrapperType);
          }
+         var eventHandlerTypes = assembly.GetTypes()
+        .Where(t => t.IsClass && !t.IsAbstract &&
+                    t.GetInterfaces().Any(i => i.IsGenericType &&
+                                             i.GetGenericTypeDefinition() == typeof(IInternalEventHandler<>)));
+
+         foreach (var handlerType in eventHandlerTypes)
+         {
+             var interfaceType = handlerType.GetInterfaces()
+                 .First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IInternalEventHandler<>));
+
+             services.AddScoped(interfaceType, handlerType);
+
+             var eventType = interfaceType.GetGenericArguments()[0];
+             var wrapperType = typeof(MediatRNotificationWrapper<>).MakeGenericType(eventType);
+             var bridgeType = typeof(MediatRNotificationHandlerBridge<>).MakeGenericType(eventType);
+             var notificationHandlerInterface = typeof(INotificationHandler<>).MakeGenericType(wrapperType);
+
+             services.AddScoped(notificationHandlerInterface, bridgeType);
+         }
      }
 
      x.UsingRabbitMq((context, cfg) =>

@@ -25,6 +25,8 @@ builder.Services.AddSharedInfrastructure(
             o.UseBusOutbox();
         });
     },
+    typeof(MediaModule).Assembly,
+    typeof(UsersModule).Assembly,
     typeof(MediaModule).Assembly
 );
 builder.Services.AddScoped<ICommandHandler<UploadVideoCommand, UploadVideoResponse>, UploadVideoHandler>();
