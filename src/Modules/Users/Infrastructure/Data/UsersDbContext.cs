@@ -9,15 +9,12 @@ public class UsersDbContext : DbContext
     public UsersDbContext(DbContextOptions<UsersDbContext> options) : base(options) { }
     public DbSet<User> Users => Set<User>();
     public DbSet<Enrollment> Enrollments => Set<Enrollment>();
+    public DbSet<CourseReadModel> CourseReadModels => Set<CourseReadModel>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
 
         modelBuilder.HasDefaultSchema("users");
-
-        modelBuilder.AddInboxStateEntity();
-        modelBuilder.AddOutboxMessageEntity();
-        modelBuilder.AddOutboxStateEntity();
 
         base.OnModelCreating(modelBuilder);
     }

@@ -20,6 +20,7 @@ public static class DependencyInjection
     Action<IBusRegistrationConfigurator>? busConfigurator = null, // Outbox vb. için kanca
     params Assembly[] moduleAssemblies)
     {
+        services.AddHostedService<OutboxBackgroundService>();
         //MinioClient
         services.AddScoped<IStorageService, MinioStorageService>();
         services.AddSingleton<IMinioClient>(sp =>
@@ -31,7 +32,7 @@ public static class DependencyInjection
                 .Build();
         });
         //mediatr
-        services.AddScoped<IInternalEventBus, MediatRInternalCommandBus>();
+        services.AddScoped<IInternalBus, MediatRInternalCommandBus>();
         services.AddTransient(typeof(IRequestHandler<,>), typeof(MediatRCommandHandlerBridge<,>));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 

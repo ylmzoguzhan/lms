@@ -1,3 +1,5 @@
+using System.Text.Json;
+using Courses.Contracts;
 using Courses.Domain.Entities;
 using Courses.Infrastructure.Data;
 using Shared.Abstractions.Messaging.Internal;
@@ -12,6 +14,14 @@ public class CreateCourseHandler(CoursesDbContext dbContext) : ICommandHandler<C
     {
         var course = new Course(command.title, command.description);
         dbContext.Courses.Add(course);
+        var outbox = new OutboxMessage
+        {
+            Id = Guid.NewGuid(),
+            Type = typeof(CourseCreatedEvent).AssemblyQualifiedName,
+            Content = JsonSerializer.Serialize(new CourseCreatedEvent(course.Id, course.Title)),
+            CreatedAt = DateTime.UtcNow
+        };
+        dbContext.OutboxMessages.Add(outbox);
         await dbContext.SaveChangesAsync(ct);
         return course.Id;
     }

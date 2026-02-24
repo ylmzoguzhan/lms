@@ -14,11 +14,6 @@ public class MediaDbContext : DbContext
 
         modelBuilder.HasDefaultSchema("media");
 
-
-        modelBuilder.AddInboxStateEntity();
-        modelBuilder.AddOutboxMessageEntity();
-        modelBuilder.AddOutboxStateEntity();
-
         base.OnModelCreating(modelBuilder);
     }
 }

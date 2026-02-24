@@ -6,7 +6,7 @@ using Users.Infrastructure.Data;
 namespace Users.Features.Enrollments;
 
 public record EnrollInCourseCommand(Guid UserId, Guid CourseId) : ICommand<Guid>;
-public class EnrollInCourseHandler(UsersDbContext dbContext, IInternalEventBus bus) : ICommandHandler<EnrollInCourseCommand, Guid>
+public class EnrollInCourseHandler(UsersDbContext dbContext, IInternalBus bus) : ICommandHandler<EnrollInCourseCommand, Guid>
 {
     public async Task<Guid> HandleAsync(EnrollInCourseCommand command, CancellationToken ct = default)
     {

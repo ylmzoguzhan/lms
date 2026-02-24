@@ -1,7 +1,9 @@
 using Courses.Infrastructure.Data;
+using Courses.Infrastructure.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Abstractions.Messaging.Outbox;
 
 namespace Courses;
 
@@ -17,6 +19,7 @@ public static class CoursesModule
                 o.MigrationsHistoryTable("__EFMigrationsHistory", "courses");
             });
         });
+        services.AddScoped<IOutboxProcessor, CoursesOutboxProcessor>();
         // services.AddScoped<VideoProcessedHandler>();
         // services.AddScoped<UploadVideoHandler>();
         return services;
