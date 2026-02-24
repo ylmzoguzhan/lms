@@ -7,6 +7,7 @@ using Media.Features.Videos.UploadVideo;
 using Media.Infrastructure.Data;
 using Shared.Abstractions.Messaging.Internal;
 using Shared.Infrastructure;
+using Users;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
@@ -21,7 +22,9 @@ builder.Services.AddSharedInfrastructure(
             o.UseBusOutbox();
         });
     },
-    typeof(MediaModule).Assembly
+    typeof(MediaModule).Assembly,
+    typeof(CoursesModule).Assembly,
+    typeof(UsersModule).Assembly
 );
 builder.Services.AddScoped<ICommandHandler<UploadVideoCommand, UploadVideoResponse>, UploadVideoHandler>();
 builder.Services.AddScoped<ICommandHandler<CreateCourseCommand, Guid>, CreateCourseHandler>();
@@ -29,6 +32,7 @@ builder.Services.AddScoped<IQueryHandler<GetCourseExistenceQuery, bool>, GetCour
 
 builder.Services.AddMediaModule(builder.Configuration);
 builder.Services.AddCoursesModule(builder.Configuration);
+builder.Services.AddUsersModule(builder.Configuration);
 var app = builder.Build();
 app.MapUploadVideo();
 app.MapCreateCourse();

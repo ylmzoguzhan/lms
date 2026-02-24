@@ -8,6 +8,7 @@
   <Folder Name="/src/Modules/">
     <Project Path="src/Modules/Courses/Courses.csproj" />
     <Project Path="src/Modules/Media/Media.csproj" />
+    <Project Path="src/Modules/Users/Users.csproj" />
   </Folder>
   <Folder Name="/src/WebGateway/">
     <Project Path="src/WebGateway/Host/Host.csproj" />
