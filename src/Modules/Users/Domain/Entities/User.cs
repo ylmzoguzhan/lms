@@ -5,9 +5,9 @@ public class User
     public Guid Id { get; private set; }
     public string Email { get; private set; }
 
-    public User(string email)
+    public User(Guid id, string email)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Email = email;
     }
 }

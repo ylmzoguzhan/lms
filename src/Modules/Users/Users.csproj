@@ -14,5 +14,6 @@
     <ProjectReference Include="..\..\BuildingBlocks\Shared.Abstractions\Shared.Abstractions.csproj" />
     <ProjectReference Include="..\..\BuildingBlocks\Shared.Contracts\Shared.Contracts.csproj" />
     <ProjectReference Include="..\Courses.Contracts\Courses.Contracts.csproj" />
+    <ProjectReference Include="..\Identity\Identity.Contracts\Identity.Contracts.csproj" />
   </ItemGroup>
 </Project>

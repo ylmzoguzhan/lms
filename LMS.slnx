@@ -11,6 +11,10 @@
     <Project Path="src/Modules/Media/Media.csproj" />
     <Project Path="src/Modules/Users/Users.csproj" />
   </Folder>
+  <Folder Name="/src/Modules/Identity/">
+    <Project Path="src/Modules/Identity/Identity.Contracts/Identity.Contracts.csproj" />
+    <Project Path="src/Modules/Identity/Identity/Identity.csproj" />
+  </Folder>
   <Folder Name="/src/WebGateway/">
     <Project Path="src/WebGateway/Host/Host.csproj" />
   </Folder>

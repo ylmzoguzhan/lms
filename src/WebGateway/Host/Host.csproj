@@ -20,6 +20,7 @@
     <ProjectReference Include="..\..\Modules\Courses\Courses.csproj" />
     <ProjectReference Include="..\..\Modules\Users\Users.csproj" />
     <ProjectReference Include="..\..\Modules\Courses.Contracts\Courses.Contracts.csproj" />
+    <ProjectReference Include="..\..\Modules\Identity\Identity\Identity.csproj" />
   </ItemGroup>
 
 </Project>
