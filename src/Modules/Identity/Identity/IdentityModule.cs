@@ -1,3 +1,4 @@
+using Identity.Domain.Entities;
 using Identity.Infrastructure;
 using Identity.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
@@ -20,11 +21,16 @@ public static class IdentityModule
                 o.MigrationsHistoryTable("__EFMigrationsHistory", "identity");
             });
         });
-        services.AddIdentity<IdentityUser, IdentityRole>(options =>
+        services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
         {
             options.Password.RequireDigit = false;
             options.Password.RequiredLength = 6;
+            options.Password.RequireNonAlphanumeric = false;
+            options.Password.RequireUppercase = false;
+            options.Password.RequireLowercase = false;
         })
+        .AddEntityFrameworkStores<IdentityDbContext>()
+        .AddDefaultTokenProviders()
         .AddEntityFrameworkStores<IdentityDbContext>()
         .AddDefaultTokenProviders();
         services.AddScoped<IOutboxProcessor, IdentityOutboxProcessor>();

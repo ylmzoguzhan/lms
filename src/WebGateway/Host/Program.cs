@@ -12,7 +12,8 @@ using Users;
 using Users.Features.Enrollments;
 using Identity;
 using Identity.Features.Users.Register;
-
+using Identity.Features.Users.Login;
+using Shared.Infrastructure.Auth;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
@@ -35,18 +36,22 @@ builder.Services.AddScoped<ICommandHandler<CreateCourseCommand, Guid>, CreateCou
 builder.Services.AddScoped<IQueryHandler<GetCourseExistenceQuery, bool>, GetCourseExistenceHandler>();
 builder.Services.AddScoped<ICommandHandler<RegisterCommand, Guid>, RegisterHandler>();
 builder.Services.AddScoped<ICommandHandler<EnrollInCourseCommand, Guid>, EnrollInCourseHandler>();
-builder.Services.AddScoped<ICommandHandler<RegisterCommand, Guid>, RegisterHandler>();
+builder.Services.AddScoped<ICommandHandler<LoginCommand, string>, LoginHandler>();
 
 builder.Services.AddMediaModule(builder.Configuration);
 builder.Services.AddCoursesModule(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
 builder.Services.AddIdentityModule(builder.Configuration);
+builder.Services.AddJwtAuthentication(builder.Configuration);
 var app = builder.Build();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapUploadVideo();
 app.MapCreateCourse();
 app.UseHttpsRedirection();
 app.MapEnrollInCourse();
 app.MapRegister();
+app.MapLogin();
 app.Run();
 
 

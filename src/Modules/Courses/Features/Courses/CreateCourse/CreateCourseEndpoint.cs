@@ -8,6 +8,6 @@ public static class CreateCourseEndpoint
         {
             var result = await internalBus.SendAsync(command);
             return Results.Ok(result);
-        }).WithTags("Courses");
+        }).WithTags("Courses").RequireAuthorization();
     }
 }

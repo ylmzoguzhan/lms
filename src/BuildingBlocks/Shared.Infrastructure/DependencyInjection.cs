@@ -11,6 +11,8 @@ using Shared.Infrastructure.Mediator;
 using Shared.Infrastructure.Mediator.Bridges;
 using Shared.Infrastructure.Mediator.Wrapper;
 using Shared.Infrastructure.Messaging.MassTransit;
+using Shared.Infrastructure.Auth;
+using Shared.Abstractions.Auth;
 
 
 namespace Shared.Infrastructure;
@@ -23,8 +25,10 @@ public static class DependencyInjection
     Action<IBusRegistrationConfigurator>? busConfigurator = null, // Outbox vb. için kanca
     params Assembly[] moduleAssemblies)
     {
+        services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+        services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
         services.AddHostedService<OutboxBackgroundService>();
-        //MinioClient
         services.AddScoped<IStorageService, MinioStorageService>();
         services.AddSingleton<IMinioClient>(sp =>
         {
@@ -34,7 +38,6 @@ public static class DependencyInjection
                 .WithSSL(false)
                 .Build();
         });
-        //mediatr
         services.AddScoped<IInternalBus, InternalBus>();
         services.AddTransient(typeof(IRequestHandler<,>), typeof(MediatRCommandHandlerBridge<,>));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
