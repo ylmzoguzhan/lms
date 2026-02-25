@@ -14,6 +14,9 @@ using Identity;
 using Identity.Features.Users.Register;
 using Identity.Features.Users.Login;
 using Shared.Infrastructure.Auth;
+using Shared.Infrastructure.Validators;
+using Shared.Infrastructure.Mediator.Behaviors;
+using MediatR;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
@@ -38,12 +41,21 @@ builder.Services.AddScoped<ICommandHandler<RegisterCommand, Guid>, RegisterHandl
 builder.Services.AddScoped<ICommandHandler<EnrollInCourseCommand, Guid>, EnrollInCourseHandler>();
 builder.Services.AddScoped<ICommandHandler<LoginCommand, string>, LoginHandler>();
 
+builder.Services.AddProjectValidators(typeof(CoursesModule).Assembly);
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(CoursesModule).Assembly);
+    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+});
 builder.Services.AddMediaModule(builder.Configuration);
 builder.Services.AddCoursesModule(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
 builder.Services.AddIdentityModule(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 var app = builder.Build();
+app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapUploadVideo();
