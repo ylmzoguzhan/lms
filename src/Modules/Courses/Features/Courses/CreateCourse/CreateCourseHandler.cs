@@ -1,12 +1,13 @@
 using Shared.Abstractions.Auth;
+using Shared.Abstractions.Response;
 
 namespace Courses.Features.Courses.CreateCourse;
 
-public record CreateCourseCommand(string title, string description) : ICommand<Guid>;
+public record CreateCourseCommand(string title, string description) : ICommand<Result<Guid>>;
 
-public class CreateCourseHandler(CoursesDbContext dbContext, IUserService userService) : ICommandHandler<CreateCourseCommand, Guid>
+public class CreateCourseHandler(CoursesDbContext dbContext, IUserService userService) : ICommandHandler<CreateCourseCommand, Result<Guid>>
 {
-    public async Task<Guid> HandleAsync(CreateCourseCommand command, CancellationToken ct = default)
+    public async Task<Result<Guid>> HandleAsync(CreateCourseCommand command, CancellationToken ct = default)
     {
         var course = new Course(command.title, command.description, userService.UserId.GetValueOrDefault());
         dbContext.Courses.Add(course);
@@ -19,6 +20,6 @@ public class CreateCourseHandler(CoursesDbContext dbContext, IUserService userSe
         };
         dbContext.OutboxMessages.Add(outbox);
         await dbContext.SaveChangesAsync(ct);
-        return course.Id;
+        return new Result<Guid>(course.Id, true);
     }
 }

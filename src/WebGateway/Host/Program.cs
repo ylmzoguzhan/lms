@@ -16,7 +16,8 @@ using Identity.Features.Users.Login;
 using Shared.Infrastructure.Auth;
 using Shared.Infrastructure.Validators;
 using Shared.Infrastructure.Mediator.Behaviors;
-using MediatR;
+using Shared.Infrastructure.Response;
+using Shared.Abstractions.Response;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
@@ -35,7 +36,7 @@ builder.Services.AddSharedInfrastructure(
     typeof(MediaModule).Assembly
 );
 builder.Services.AddScoped<ICommandHandler<UploadVideoCommand, UploadVideoResponse>, UploadVideoHandler>();
-builder.Services.AddScoped<ICommandHandler<CreateCourseCommand, Guid>, CreateCourseHandler>();
+builder.Services.AddScoped<ICommandHandler<CreateCourseCommand, Result<Guid>>, CreateCourseHandler>();
 builder.Services.AddScoped<IQueryHandler<GetCourseExistenceQuery, bool>, GetCourseExistenceHandler>();
 builder.Services.AddScoped<ICommandHandler<RegisterCommand, Guid>, RegisterHandler>();
 builder.Services.AddScoped<ICommandHandler<EnrollInCourseCommand, Guid>, EnrollInCourseHandler>();
@@ -58,12 +59,14 @@ var app = builder.Build();
 app.UseExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapUploadVideo();
-app.MapCreateCourse();
+var apiGroup = app.MapGroup(string.Empty)
+    .AddEndpointFilter<ResultEndpointFilter>();
+apiGroup.MapUploadVideo();
+apiGroup.MapCreateCourse();
 app.UseHttpsRedirection();
-app.MapEnrollInCourse();
-app.MapRegister();
-app.MapLogin();
+apiGroup.MapEnrollInCourse();
+apiGroup.MapRegister();
+apiGroup.MapLogin();
 app.Run();
 
 

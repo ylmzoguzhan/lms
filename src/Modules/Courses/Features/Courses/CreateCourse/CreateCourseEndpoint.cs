@@ -7,7 +7,7 @@ public static class CreateCourseEndpoint
         app.MapPost("/courses/course", async (CreateCourseCommand command, [FromServices] IInternalBus internalBus) =>
         {
             var result = await internalBus.SendAsync(command);
-            return Results.Ok(result);
+            return result;
         }).WithTags("Courses").RequireAuthorization();
     }
 }
