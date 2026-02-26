@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using Shared.Abstractions.Response;
 
@@ -21,24 +22,58 @@ public class ApiResponse<T>
         };
     }
 }
-
 public class ResultEndpointFilter : IEndpointFilter
 {
-    public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
+    public async ValueTask<object?> InvokeAsync(
+        EndpointFilterInvocationContext context,
+        EndpointFilterDelegate next)
     {
         var result = await next(context);
 
-        if (result != null && IsResultType(result))
+        if (result == null)
+            return null;
+
+        if (IsResultType(result))
         {
-            var wrapperType = typeof(ApiResponse<>).MakeGenericType(result.GetType().GetGenericArguments()[0]);
-            var method = wrapperType.GetMethod("FromResult", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+            var resultType = result.GetType();
+            var dataProp = resultType.GetProperty("Data");
+            var statusCodeProp = resultType.GetProperty("StatusCode");
+            var isSuccessProp = resultType.GetProperty("IsSuccess");
+
+            var data = dataProp?.GetValue(result);
+            var statusCode = (int)(statusCodeProp?.GetValue(result) ?? 200);
+            var isSuccess = (bool)(isSuccessProp?.GetValue(result) ?? true);
+
+            if (data != null && data.GetType().IsGenericType &&
+                data.GetType().GetGenericTypeDefinition() == typeof(PagedList<>))
+            {
+                if (!isSuccess)
+                {
+                    return statusCode switch
+                    {
+                        404 => Results.NotFound(data),
+                        403 => Results.Forbid(),
+                        _ => Results.BadRequest(data)
+                    };
+                }
+
+                return statusCode switch
+                {
+                    201 => Results.Created(string.Empty, data),
+                    204 => Results.NoContent(),
+                    _ => Results.Ok(data)
+                };
+            }
+
+            var wrapperType = typeof(ApiResponse<>)
+                .MakeGenericType(resultType.GetGenericArguments()[0]);
+
+            var method = wrapperType.GetMethod("FromResult",
+                BindingFlags.Static | BindingFlags.Public);
 
             if (method != null)
             {
                 var wrappedResult = method.Invoke(null, new[] { result });
-
-                var statusCode = (int)result.GetType().GetProperty("StatusCode")?.GetValue(result);
-                var isSuccess = (bool)result.GetType().GetProperty("IsSuccess")?.GetValue(result);
 
                 if (!isSuccess)
                 {
@@ -58,7 +93,6 @@ public class ResultEndpointFilter : IEndpointFilter
                 };
             }
         }
-
         return result;
     }
 

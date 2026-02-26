@@ -18,6 +18,8 @@ using Shared.Infrastructure.Validators;
 using Shared.Infrastructure.Mediator.Behaviors;
 using Shared.Infrastructure.Response;
 using Shared.Abstractions.Response;
+using Courses.Features.Courses.GetCourses;
+using Courses.Features.Courses.Dto;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
@@ -41,6 +43,7 @@ builder.Services.AddScoped<IQueryHandler<GetCourseExistenceQuery, bool>, GetCour
 builder.Services.AddScoped<ICommandHandler<RegisterCommand, Guid>, RegisterHandler>();
 builder.Services.AddScoped<ICommandHandler<EnrollInCourseCommand, Guid>, EnrollInCourseHandler>();
 builder.Services.AddScoped<ICommandHandler<LoginCommand, string>, LoginHandler>();
+builder.Services.AddScoped<IQueryHandler<GetCoursesQuery, Result<PagedList<CourseDto>>>, GetCoursesHandler>();
 
 builder.Services.AddProjectValidators(typeof(CoursesModule).Assembly);
 builder.Services.AddMediatR(cfg =>
@@ -55,6 +58,7 @@ builder.Services.AddIdentityModule(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddScoped<IPagedListFactory, EfPagedListFactory>();
 var app = builder.Build();
 app.UseExceptionHandler();
 app.UseAuthentication();
@@ -67,6 +71,7 @@ app.UseHttpsRedirection();
 apiGroup.MapEnrollInCourse();
 apiGroup.MapRegister();
 apiGroup.MapLogin();
+apiGroup.MapGetCourses();
 app.Run();
 
 
