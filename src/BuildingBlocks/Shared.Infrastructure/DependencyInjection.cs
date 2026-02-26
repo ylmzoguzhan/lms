@@ -13,6 +13,8 @@ using Shared.Infrastructure.Mediator.Wrapper;
 using Shared.Infrastructure.Messaging.MassTransit;
 using Shared.Infrastructure.Auth;
 using Shared.Abstractions.Auth;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Shared.Infrastructure.Data.Interceptors;
 
 
 namespace Shared.Infrastructure;
@@ -94,7 +96,7 @@ public static class DependencyInjection
      });
  });
 
-
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         return services;
     }
 }

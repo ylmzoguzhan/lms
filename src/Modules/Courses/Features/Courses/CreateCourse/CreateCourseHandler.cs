@@ -5,11 +5,11 @@ namespace Courses.Features.Courses.CreateCourse;
 
 public record CreateCourseCommand(string title, string description) : ICommand<Result<Guid>>;
 
-public class CreateCourseHandler(CoursesDbContext dbContext, IUserService userService) : ICommandHandler<CreateCourseCommand, Result<Guid>>
+public class CreateCourseHandler(CoursesDbContext dbContext) : ICommandHandler<CreateCourseCommand, Result<Guid>>
 {
     public async Task<Result<Guid>> HandleAsync(CreateCourseCommand command, CancellationToken ct = default)
     {
-        var course = new Course(command.title, command.description, userService.UserId.GetValueOrDefault());
+        var course = new Course(command.title, command.description);
         dbContext.Courses.Add(course);
         var outbox = new OutboxMessage
         {

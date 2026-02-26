@@ -1,16 +1,15 @@
+using Shared.Abstractions.Domain;
+
 namespace Courses.Domain.Entities;
 
-public class Course
+public class Course : BaseEntity
 {
-    public Guid Id { get; private set; }
     public string Title { get; private set; }
     public string Description { get; set; }
-    public Guid CreatedBy { get; set; }
-    public Course(string title, string description, Guid createdBy)
+    public Course(string title, string description)
     {
         Id = Guid.NewGuid();
         Title = title;
         Description = description;
-        CreatedBy = createdBy;
     }
 }
