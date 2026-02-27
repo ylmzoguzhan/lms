@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Users.Features.CourseReadModels;
+using Users.Features.Enrollments;
 
 namespace Users;
 
@@ -20,6 +21,8 @@ public static class UsersModule
         // services.AddScoped<VideoProcessedHandler>();
         // services.AddScoped<UploadVideoHandler>();
         services.AddScoped<IInternalEventHandler<CourseCreatedEvent>, CourseCreatedHandler>();
+        services.AddScoped<ICommandHandler<EnrollInCourseCommand, Guid>, EnrollInCourseHandler>();
+
         return services;
 
     }

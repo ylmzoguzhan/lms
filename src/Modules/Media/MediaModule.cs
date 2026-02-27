@@ -23,6 +23,7 @@ public static class MediaModule
         });
         services.AddScoped<VideoProcessedHandler>();
         services.AddScoped<UploadVideoHandler>();
+        services.AddScoped<ICommandHandler<UploadVideoCommand, UploadVideoResponse>, UploadVideoHandler>();
         return services;
 
     }
