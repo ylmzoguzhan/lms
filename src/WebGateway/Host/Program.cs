@@ -57,7 +57,7 @@ builder.Services.AddUsersModule(builder.Configuration);
 builder.Services.AddIdentityModule(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddProblemDetails();
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
 builder.Services.AddScoped<IPagedListFactory, EfPagedListFactory>();
 var app = builder.Build();
 app.UseExceptionHandler();

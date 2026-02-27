@@ -9,7 +9,7 @@ public class CreateCourseValidator : IAppValidator<CreateCourseCommand>
         var errors = new List<ValidationError>();
 
         if (string.IsNullOrEmpty(request.title))
-            errors.Add(new ValidationError("Title", "Başlık boş olamaz."));
+            errors.Add(new ValidationError("Course.Title", "Başlık boş olamaz."));
 
         return Task.FromResult(errors.AsEnumerable());
     }
