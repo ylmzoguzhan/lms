@@ -1,4 +1,5 @@
 using Courses.Features.Courses.CreateCourse;
+using Courses.Features.Courses.DeleteCourse;
 using Courses.Features.Courses.Dto;
 using Courses.Features.Courses.GetCourseExistence;
 using Courses.Features.Courses.GetCourses;
@@ -30,7 +31,7 @@ public static class CoursesModule
         services.AddScoped<IQueryHandler<GetCoursesQuery, Result<PagedList<CourseDto>>>, GetCoursesHandler>();
         services.AddScoped<ICommandHandler<CreateCourseCommand, Result<Guid>>, CreateCourseHandler>();
         services.AddScoped<IQueryHandler<GetCourseExistenceQuery, bool>, GetCourseExistenceHandler>();
-
+        services.AddScoped<ICommandHandler<DeleteCourseCommand, Result<bool>>, DeleteCourseHandler>();
         return services;
 
     }

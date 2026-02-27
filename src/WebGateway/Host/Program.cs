@@ -19,7 +19,9 @@ using Shared.Infrastructure.Mediator.Behaviors;
 using Shared.Infrastructure.Response;
 using Shared.Abstractions.Response;
 using Courses.Features.Courses.GetCourses;
-using Courses.Features.Courses.Dto;
+using Courses.Features.Courses.DeleteCourse;
+using Shared.Infrastructure.GlobalExceptions;
+using Shared.Infrastructure.Mediator;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
@@ -46,7 +48,7 @@ builder.Services.AddProjectValidators(typeof(CoursesModule).Assembly);
 //exceptions
 builder.Services.AddProblemDetails();
 builder.Services.AddExceptionHandler<ValidationExceptionHandler>();
-
+builder.Services.AddExceptionHandler<NotFoundExceptionHandler>();
 //token
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
@@ -65,7 +67,7 @@ builder.Services.AddSharedInfrastructure(
     typeof(UsersModule).Assembly,
     typeof(MediaModule).Assembly
 );
-
+builder.Services.AddScoped<IInternalBus, InternalBus>();
 var app = builder.Build();
 app.UseExceptionHandler();
 app.UseAuthentication();
@@ -79,6 +81,7 @@ apiGroup.MapEnrollInCourse();
 apiGroup.MapRegister();
 apiGroup.MapLogin();
 apiGroup.MapGetCourses();
+apiGroup.MapDeleteCourse();
 app.Run();
 
 

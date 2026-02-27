@@ -21,6 +21,7 @@ public static class UsersModule
         // services.AddScoped<VideoProcessedHandler>();
         // services.AddScoped<UploadVideoHandler>();
         services.AddScoped<IInternalEventHandler<CourseCreatedEvent>, CourseCreatedHandler>();
+        services.AddScoped<IInternalEventHandler<CourseDeletedEvent>, CourseDeletedHandler>();
         services.AddScoped<ICommandHandler<EnrollInCourseCommand, Guid>, EnrollInCourseHandler>();
 
         return services;

@@ -46,6 +46,14 @@ public sealed class AuditableEntityInterceptor(IUserService currentUser) : SaveC
                 if (currentUser.UserId != Guid.Empty)
                     entry.Entity.LastModifiedBy = currentUser.UserId;
             }
+            if (entry.State == EntityState.Deleted)
+            {
+                entry.Entity.DeletedAtUtc = DateTime.UtcNow;
+                entry.Entity.IsDeleted = true;
+                entry.State = EntityState.Modified;
+                if (currentUser.UserId != Guid.Empty)
+                    entry.Entity.DeletedBy = currentUser.UserId;
+            }
         }
     }
 }

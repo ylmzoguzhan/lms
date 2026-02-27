@@ -4,7 +4,7 @@ using Shared.Infrastructure.Mediator.Wrapper;
 
 namespace Shared.Infrastructure.Mediator;
 
-internal class InternalBus(IMediator mediator) : IInternalBus
+public class InternalBus(IMediator mediator) : IInternalBus
 {
     public async Task<TResponse> SendAsync<TResponse>(ICommand<TResponse> command, CancellationToken ct = default)
     {
