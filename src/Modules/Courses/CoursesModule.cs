@@ -3,6 +3,9 @@ using Courses.Features.Courses.DeleteCourse;
 using Courses.Features.Courses.Dto;
 using Courses.Features.Courses.GetCourseExistence;
 using Courses.Features.Courses.GetCourses;
+using Courses.Features.LessonMedia.CreateLessonMedia;
+using Courses.Features.Lessons.CreateLesson;
+using Courses.Features.Modules.CreateModule;
 using Courses.Infrastructure.Messaging;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -32,6 +35,9 @@ public static class CoursesModule
         services.AddScoped<ICommandHandler<CreateCourseCommand, Result<Guid>>, CreateCourseHandler>();
         services.AddScoped<IQueryHandler<GetCourseExistenceQuery, bool>, GetCourseExistenceHandler>();
         services.AddScoped<ICommandHandler<DeleteCourseCommand, Result<bool>>, DeleteCourseHandler>();
+        services.AddScoped<ICommandHandler<CreateModuleCommand, Result<Guid>>, CreateModuleHandler>();
+        services.AddScoped<ICommandHandler<CreateLessonCommand, Result<CreateLessonResponse>>, CreateLessonHandler>();
+        services.AddScoped<IInternalEventHandler<LessonMediaCreatedEvent>, LessonMediaCreatedHandler>();
         return services;
 
     }

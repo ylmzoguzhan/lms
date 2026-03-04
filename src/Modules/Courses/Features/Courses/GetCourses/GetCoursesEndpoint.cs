@@ -4,7 +4,7 @@ public static class GetCoursesEndpoint
 {
     public static void MapGetCourses(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/courses/courses", async (GetCoursesQuery query, [FromServices] IInternalBus internalBus) =>
+        app.MapPost("/courses/courses", async (GetCoursesQuery query, [FromServices] IDispatcher internalBus) =>
         {
             var result = await internalBus.QueryAsync(query);
             return result;

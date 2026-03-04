@@ -4,17 +4,18 @@ namespace Media.Domain.Entities;
 
 public class Video : BaseEntity
 {
-    public string Title { get; private set; }
+    public string FileName { get; private set; }
     public string BlobPath { get; private set; }
     public string? HlsPath { get; private set; }
     public VideoStatus Status { get; private set; }
-
-    public Video(string title, string blobPath)
+    public string ContentType { get; set; }
+    public Video(string fileName, string blobPath, string contentType)
     {
         Id = Guid.NewGuid();
-        Title = title;
+        FileName = fileName;
         BlobPath = blobPath;
         Status = VideoStatus.Pending;
+        ContentType = contentType;
     }
 
     public void MarkAsProcessing() => Status = VideoStatus.Processing;

@@ -2,7 +2,7 @@ namespace Courses.Infrastructure.Messaging;
 
 public class CoursesOutboxProcessor(
     CoursesDbContext dbContext,
-    IInternalBus bus,
+    IDispatcher bus,
     ILogger<CoursesOutboxProcessor> logger) : IOutboxProcessor
 {
     public async Task ProcessAsync(CancellationToken ct = default)

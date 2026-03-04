@@ -1,7 +1,3 @@
-using MediatR;
-using Shared.Abstractions.Mediator;
-using Shared.Infrastructure.Mediator.Wrapper;
-
 namespace Shared.Infrastructure.Mediator.Bridges;
 
 public class MediatRNotificationHandlerBridge<T>(IInternalEventHandler<T> handler)

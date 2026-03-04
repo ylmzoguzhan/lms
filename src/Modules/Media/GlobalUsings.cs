@@ -3,7 +3,7 @@ global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Routing;
 global using Shared.Abstractions;
-global using Shared.Abstractions.Mediator;
+global using Shared.Abstractions.Request;
 global using Media.Domain.Entities;
 global using Media.Infrastructure.Data;
 global using Shared.Abstractions.Messaging;

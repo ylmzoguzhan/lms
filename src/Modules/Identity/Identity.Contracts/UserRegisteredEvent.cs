@@ -1,4 +1,4 @@
-using Shared.Abstractions.Mediator;
+using Shared.Abstractions.Request;
 
 namespace Identity.Contracts;
 

@@ -6,7 +6,7 @@ using MassTransit;
 using Media;
 using Media.Features.Videos.UploadVideo;
 using Media.Infrastructure.Data;
-using Shared.Abstractions.Mediator;
+using Shared.Abstractions.Request;
 using Shared.Infrastructure;
 using Users;
 using Users.Features.Enrollments;
@@ -22,6 +22,8 @@ using Courses.Features.Courses.GetCourses;
 using Courses.Features.Courses.DeleteCourse;
 using Shared.Infrastructure.GlobalExceptions;
 using Shared.Infrastructure.Mediator;
+using Courses.Features.Modules.CreateModule;
+using Courses.Features.Lessons.CreateLesson;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddOpenApi();
 
@@ -63,11 +65,10 @@ builder.Services.AddSharedInfrastructure(
             o.UseBusOutbox();
         });
     },
+    typeof(CoursesModule).Assembly,
     typeof(MediaModule).Assembly,
-    typeof(UsersModule).Assembly,
-    typeof(MediaModule).Assembly
-);
-builder.Services.AddScoped<IInternalBus, InternalBus>();
+    typeof(UsersModule).Assembly);
+// builder.Services.AddScoped<IInternalBus, InternalBus>();
 var app = builder.Build();
 app.UseExceptionHandler();
 app.UseAuthentication();
@@ -82,6 +83,8 @@ apiGroup.MapRegister();
 apiGroup.MapLogin();
 apiGroup.MapGetCourses();
 apiGroup.MapDeleteCourse();
+apiGroup.MapCreateModule();
+apiGroup.MapCreateLesson();
 app.Run();
 
 

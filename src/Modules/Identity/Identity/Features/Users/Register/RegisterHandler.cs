@@ -3,7 +3,7 @@ using Identity.Contracts;
 using Identity.Domain.Entities;
 using Identity.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
-using Shared.Abstractions.Mediator;
+using Shared.Abstractions.Request;
 
 namespace Identity.Features.Users.Register;
 

@@ -1,6 +1,6 @@
-namespace Shared.Abstractions.Mediator;
+namespace Shared.Abstractions.Request;
 
-public interface IInternalBus
+public interface IDispatcher
 {
     Task<TResponse> SendAsync<TResponse>(ICommand<TResponse> command, CancellationToken ct = default);
     Task<TResponse> QueryAsync<TResponse>(IQuery<TResponse> query, CancellationToken ct = default);

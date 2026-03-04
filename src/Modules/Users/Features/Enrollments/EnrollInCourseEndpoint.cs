@@ -1,12 +1,10 @@
-
-
 namespace Users.Features.Enrollments;
 
 public static class EnrollInCourseEndpoint
 {
     public static void MapEnrollInCourse(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/users/enrollincourse", async (EnrollInCourseCommand command, [FromServices] IInternalBus internalBus) =>
+        app.MapPost("/users/enrollincourse", async (EnrollInCourseCommand command, [FromServices] IDispatcher internalBus) =>
         {
             var result = await internalBus.SendAsync(command);
             return Results.Ok(result);

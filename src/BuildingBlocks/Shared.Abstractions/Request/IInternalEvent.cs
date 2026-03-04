@@ -1,4 +1,4 @@
-namespace Shared.Abstractions.Mediator;
+namespace Shared.Abstractions.Request;
 
 public interface IInternalEvent { }
 

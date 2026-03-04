@@ -1,9 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Shared.Abstractions.Mediator;
 using Shared.Abstractions.Validator;
-using Shared.Infrastructure.Mediator.Wrapper;
 
 namespace Shared.Infrastructure.Mediator.Behaviors;
 

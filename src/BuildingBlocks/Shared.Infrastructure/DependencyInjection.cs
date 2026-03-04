@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Minio;
 using Shared.Abstractions;
 using Shared.Abstractions.Messaging;
-using Shared.Abstractions.Mediator;
+using Shared.Abstractions.Request;
 using Shared.Infrastructure.Mediator;
 using Shared.Infrastructure.Mediator.Bridges;
 using Shared.Infrastructure.Mediator.Wrapper;
@@ -40,7 +40,7 @@ public static class DependencyInjection
                 .WithSSL(false)
                 .Build();
         });
-        services.AddScoped<IInternalBus, InternalBus>();
+        services.AddScoped<IDispatcher, MediatRDispatcher>();
         services.AddTransient(typeof(IRequestHandler<,>), typeof(MediatRCommandHandlerBridge<,>));
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 
@@ -93,6 +93,8 @@ public static class DependencyInjection
      {
          cfg.Host(configuration["RabbitMq:Host"] ?? "localhost", "/");
          cfg.ConfigureEndpoints(context);
+         cfg.UseRawJsonDeserializer();
+
      });
  });
 

@@ -4,7 +4,7 @@ public static class CreateCourseEndpoint
 {
     public static void MapCreateCourse(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/courses/course", async (CreateCourseCommand command, [FromServices] IInternalBus internalBus) =>
+        app.MapPost("/courses/course", async (CreateCourseCommand command, [FromServices] IDispatcher internalBus) =>
         {
             var result = await internalBus.SendAsync(command);
             return result;

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
-using Shared.Abstractions.Mediator;
+using Shared.Abstractions.Request;
 
 namespace Identity.Features.Users.Login;
 
@@ -10,7 +10,7 @@ public static class LoginEndpoint
 {
     public static void MapLogin(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/identity/login", async (LoginCommand command, [FromServices] IInternalBus internalBus) =>
+        app.MapPost("/identity/login", async (LoginCommand command, [FromServices] IDispatcher internalBus) =>
         {
             var result = await internalBus.SendAsync(command);
             return Results.Ok(result);

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Shared.Abstractions.Mediator;
+using Shared.Abstractions.Request;
 using Shared.Abstractions.Messaging.Outbox;
 
 namespace Identity;

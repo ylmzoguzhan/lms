@@ -2,7 +2,7 @@ using System.Windows.Input;
 using Identity.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Shared.Abstractions.Auth;
-using Shared.Abstractions.Mediator;
+using Shared.Abstractions.Request;
 
 namespace Identity.Features.Users.Login;
 

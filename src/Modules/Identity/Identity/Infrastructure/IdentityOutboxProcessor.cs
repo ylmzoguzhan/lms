@@ -2,12 +2,12 @@ using System.Text.Json;
 using Identity.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Shared.Abstractions.Mediator;
+using Shared.Abstractions.Request;
 using Shared.Abstractions.Messaging.Outbox;
 
 namespace Identity.Infrastructure;
 
-public class IdentityOutboxProcessor(IdentityDbContext dbContext, IInternalBus bus, ILogger<IdentityOutboxProcessor> logger) : IOutboxProcessor
+public class IdentityOutboxProcessor(IdentityDbContext dbContext, IDispatcher bus, ILogger<IdentityOutboxProcessor> logger) : IOutboxProcessor
 {
     public async Task ProcessAsync(CancellationToken ct = default)
     {
