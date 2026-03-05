@@ -16,12 +16,14 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         _options = options.Value;
     }
 
-    public string GenerateToken(Guid userId, string email, List<string> roles, Dictionary<string, string>? customClaims = null)
+    public string GenerateToken(Guid userId, string email, List<string> roles, IEnumerable<Claim>? customClaims = null)
     {
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, userId.ToString()),
+            new(ClaimTypes.NameIdentifier, userId.ToString()),
             new(JwtRegisteredClaimNames.Email, email),
+            new(ClaimTypes.Email, email),
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
@@ -29,9 +31,13 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 
         if (customClaims != null)
         {
-            foreach (var claim in customClaims)
+            var existingClaims = new HashSet<string>(claims.Select(x => $"{x.Type}:{x.Value}"));
+            foreach (var claim in customClaims.Where(x => !string.IsNullOrWhiteSpace(x.Type) && !string.IsNullOrWhiteSpace(x.Value)))
             {
-                claims.Add(new Claim(claim.Key, claim.Value));
+                if (existingClaims.Add($"{claim.Type}:{claim.Value}"))
+                {
+                    claims.Add(claim);
+                }
             }
         }
 

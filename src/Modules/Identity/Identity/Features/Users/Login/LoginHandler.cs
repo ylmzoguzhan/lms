@@ -1,4 +1,3 @@
-using System.Windows.Input;
 using Identity.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Shared.Abstractions.Auth;
@@ -17,8 +16,9 @@ public class LoginHandler(UserManager<AppUser> userManager, IJwtTokenGenerator t
         {
             return "";
         }
-        List<string> roles = new();
-        var loginResponse = tokenGenerator.GenerateToken(user.Id, user.Email, roles);
+        var roles = (await userManager.GetRolesAsync(user)).ToList();
+        var claims = await userManager.GetClaimsAsync(user);
+        var loginResponse = tokenGenerator.GenerateToken(user.Id, user.Email!, roles, claims);
         return loginResponse;
     }
 }
